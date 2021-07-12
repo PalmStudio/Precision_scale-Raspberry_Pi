@@ -8,9 +8,11 @@ The following code helps you interfacing a Raspberry Pi (or any computer really)
 
 ### Log in
 
-!!! Note
+---
 
-    If you're using a regular computer (not a Raspberry), go to the [next step directly](#clone-or-download).
+If you're using a regular computer (not a Raspberry), go to the [next step directly](#clone-or-download).
+
+---
 
 If you're using a Raspberry Pi, you'll first have log onto it. If you don't have a screen + keyboard connected to your Raspberry, you can connect using another computer using an RJ45 (ethernet) cable and use SSH. To use SSH, open a terminal (on windows: `Windows key + R`, and then type `powershell` + `Enter`). If you didn't change the default name of the Raspberry,
 enter the following command:
@@ -39,14 +41,19 @@ cd Documents/precision_scale-raspberry_pi
 
 Open the file named `parameters.yml` and change the values of the connexion parameters according to the ones given by the manufacturer of the scale, or the one you parameterized onto your scale.
 
-!!! Note
-    You can use Julia to know which serial port is used for the connexion. Simply execute this code and copy/paste the results into the `portname` value in `parameters.yml`:
+---
 
-    ```julia
-    using Pkg; Pkg.activate(".")
-    using SerialPorts
-    list_serialports()
-    ```
+#### Note
+
+You can use Julia to know which serial port is used for the connexion. Simply execute this code and copy/paste the results into the `portname` value in `parameters.yml`:
+
+```julia
+using Pkg; Pkg.activate(".")
+using SerialPorts
+list_serialports()
+```
+
+---
 
 ### Run the script
 
