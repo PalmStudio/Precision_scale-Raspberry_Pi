@@ -6,25 +6,25 @@ function parse_weight(x)
     else
         weight_sign = weight_sign.match
     end
-    parse(Float64,string(weight_sign,match(r"\d+\.\d+", x).match))
+    parse(Float64, string(weight_sign, match(r"\d+\.\d+", x).match))
 end
 
 function read_weight(sp,bytes = 31)
-    weight = String(read(sp,bytes))
+    weight = String(read(sp, bytes))
 
     if length(weight) == 0
-        weight = read_weight(sp)
+        weight = read_weight(sp, bytes)
     end
 
     if last(weight) != '\n'
         if last(weight) == 'N'
-            # The data sent is not stable, so there is no unit (30 bytes only)
-            # We have to get back to the normal so we read 30 bytes and then 31
+            # The data sent is not stable, so there is no unit (e.g. 30 bytes only instead of 31)
+            # We have to get back to the normal so we read e.g. 30 bytes and then 31
             # to make up for the delay:
-            read_weight(sp, 30);
+            read_weight(sp, bytes - 1);
             weight = read_weight(sp)
         else
-            weight = read_weight(sp)
+            weight = read_weight(sp, bytes)
         end
     end
 
