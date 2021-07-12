@@ -63,3 +63,9 @@ nohup julia monitor_weight.jl
 ```
 
 That's it! Julia is now monitoring the data sent by the scale.
+
+---
+
+## Python dependency
+
+If you want to avoid the Python dependency, use the branch named [Using-LibSerialPort.jl-instead-of-SerialPorts.jl](https://github.com/ARCHIMED-platform/Precision_scale-Raspberry_Pi/tree/Using-LibSerialPort.jl-instead-of-SerialPorts.jl) which uses LibSerialPort. This is far better but does not build on my Raspberry Pi (don't know why).
