@@ -1,7 +1,7 @@
 using Pkg
 Pkg.activate(".")
 Pkg.instantiate()
-using SerialPorts
+using LibSerialPort
 using Dates
 using YAML
 using Statistics
@@ -23,5 +23,5 @@ measure_weight(
     output_file_name,
     parameters["portname"],
     parameters["baudrate"],
-    parameters["bits"]bits,
+    parameters["bits"],
     parameters["stopbits"])

@@ -6,32 +6,33 @@ function parse_weight(x)
     else
         weight_sign = weight_sign.match
     end
-    parse(Float64,string(weight_sign,match(r"\d+\.\d+", x).match))
+    parse(Float64, string(weight_sign, match(r"\d+\.\d+", x).match))
 end
 
-function read_weight(sp,bytes = 31)
-    weight = String(read(sp,bytes))
-
+function read_weight(sp, bytes = 31)
+    weight_ = Vector{UInt8}()
+    readbytes!(sp, weight_, bytes)
+    weight = String(weight_)
     if length(weight) == 0
-        weight = read_weight(sp)
+        weight = read_weight(sp, bytes)
     end
 
     if last(weight) != '\n'
         if last(weight) == 'N'
-            # The data sent is not stable, so there is no unit (30 bytes only)
-            # We have to get back to the normal so we read 30 bytes and then 31
+            # The data sent is not stable, so there is no unit (e.g. 30 bytes only instead of 31)
+            # We have to get back to the normal so we read e.g. 30 bytes and then 31
             # to make up for the delay:
-            read_weight(sp, 30);
+            read_weight(sp, bytes - 1);
             weight = read_weight(sp)
         else
-            weight = read_weight(sp)
+            weight = read_weight(sp, bytes)
         end
     end
 
     return weight
 end
 
-function measure_weight(file_path,portname,baudrate,bits,stopbits)
+function measure_weight(file_path, portname, baudrate, bits, stopbits)
     # Initialise a weight measurement:
     weight_value = Any[missing]
 
@@ -40,10 +41,9 @@ function measure_weight(file_path,portname,baudrate,bits,stopbits)
 
     # integration_step = integration_step * 1000 # transform into microsecond
     println("Connecting to port $portname")
-    sp = SerialPort(portname, baudrate,bits,stopbits)
-    # sp = open(portname, baudrate)
-    # print_port_metadata(sp)
-    # print_port_settings(sp)
+    sp = open(portname, baudrate)
+    set_frame(sp; ndatabits = bits, nstopbits = stopbits)
+
     try
         while true
             try
@@ -74,7 +74,7 @@ function measure_weight(file_path,portname,baudrate,bits,stopbits)
 
                         # if (date - date_before[1]).value >= integration_step
                         weight_string = string(Dates.format(date, "yyyy-mm-ddTHH:MM:SS")," ",
-                            round(weight_value[1]; digits=3),"\n")
+                            round(weight_value[1]; digits = 3),"\n")
                         weights_file = open(file_path, "a")
                         write(weights_file, weight_string)
                         close(weights_file)
