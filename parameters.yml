@@ -1,0 +1,6 @@
+---
+# File for the scale connexion parameters
+portname: "COM8" # name of the port onto which the scale is connected, use `list_serialports()` in Julia to see which. E.g. on linux: "/dev/ttyS5", on Windows: "COM6"
+baudrate: 9600 # Baud rate, this is usually given by the manufacturer
+bits: 7 # Bits for data encoding, given by manufacturer
+stopbits: 2 # Stop bits, given by manufacturer
