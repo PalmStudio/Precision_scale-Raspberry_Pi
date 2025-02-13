@@ -1,6 +1,6 @@
 # Interfacing a precision scale with a Raspberry Pi or a computer
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ARCHIMED-platform/precision_scale-raspberry_pi)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14862494.svg)](https://doi.org/10.5281/zenodo.14862494)
 
 The following code helps you interfacing a Raspberry Pi (or any computer really) with a precision scale and log the measurement values into a file.
 
